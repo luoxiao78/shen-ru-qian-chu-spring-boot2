@@ -1,9 +1,7 @@
 package net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.app;
 
 import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.config.AppConfig;
-import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.model.Animal;
-import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.model.Owner;
-import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.model.User;
+import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.model.*;
 import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +25,8 @@ public class IocDemo {
     userService.userInfo(ctx.getBean(User.class));
     logger.info(ctx.getBean("dataSource").getClass().getName());
     logger.info(ctx.getBean(Animal.class).workInfo());
-    ctx.getBean(Owner.class).service();
+    ctx.getBean(DogOwner.class).service();
+    ctx.getBean(CatOwner.class).service();
   }
 
 }
