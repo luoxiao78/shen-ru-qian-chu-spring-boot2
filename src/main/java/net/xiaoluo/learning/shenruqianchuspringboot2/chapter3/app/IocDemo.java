@@ -9,6 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.sql.DataSource;
+
 /**
  * @author Xiao Luo
  * @project shen-ru-qian-chu-spring-boot-2
@@ -23,6 +25,7 @@ public class IocDemo {
     final ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
     final UserService userService = ctx.getBean(UserService.class);
     userService.userInfo(ctx.getBean(User.class));
+    logger.info(ctx.getBean("dataSource").getClass().getName());
   }
 
 }
