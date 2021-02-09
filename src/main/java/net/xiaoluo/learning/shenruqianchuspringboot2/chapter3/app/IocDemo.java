@@ -1,7 +1,7 @@
 package net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.app;
 
 import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.config.AppConfig;
-import net.xiaoluo.learning.shenruqianchuspringboot2.common.model.User;
+import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.config.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
