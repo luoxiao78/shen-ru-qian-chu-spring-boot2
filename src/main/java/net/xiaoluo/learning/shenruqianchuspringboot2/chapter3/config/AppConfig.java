@@ -14,7 +14,7 @@ import java.util.Properties;
  * @created 2021-02-09
  */
 @Configuration
-@ComponentScan({"net.xiaoluo.learning.shenruqianchuspringboot2.*"})
+@ComponentScan({"net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.*"})
 public class AppConfig {
 
   @Bean(name = "dataSource")
