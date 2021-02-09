@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration;
  * @created 2021-02-09
  */
 @Configuration
-@ComponentScan
+@ComponentScan({"net.xiaoluo.learning.shenruqianchuspringboot2.*"})
 public class AppConfig {
 }

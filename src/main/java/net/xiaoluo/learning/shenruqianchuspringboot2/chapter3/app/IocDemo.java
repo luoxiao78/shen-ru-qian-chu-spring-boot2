@@ -1,7 +1,8 @@
 package net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.app;
 
 import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.config.AppConfig;
-import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.config.User;
+import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.model.User;
+import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,8 +21,8 @@ public class IocDemo {
 
   public static void main(String[] args) {
     final ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
-    final User user = ctx.getBean(User.class);
-    logger.info(user.getUserName());
+    final UserService userService = ctx.getBean(UserService.class);
+    userService.userInfo(ctx.getBean(User.class));
   }
 
 }

@@ -1,4 +1,4 @@
-package net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.config;
+package net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.model;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
