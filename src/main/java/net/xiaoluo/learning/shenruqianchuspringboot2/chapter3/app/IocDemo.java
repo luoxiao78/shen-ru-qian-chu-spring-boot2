@@ -27,6 +27,7 @@ public class IocDemo {
     logger.info(ctx.getBean(Animal.class).workInfo());
     ctx.getBean(DogOwner.class).service();
     ctx.getBean(CatOwner.class).service();
+    logger.info(ctx.getBean(DatabaseProperties.class).getDriverName());
   }
 
 }

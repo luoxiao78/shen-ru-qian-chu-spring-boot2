@@ -4,6 +4,7 @@ import org.apache.commons.dbcp2.BasicDataSourceFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -14,6 +15,7 @@ import java.util.Properties;
  * @created 2021-02-09
  */
 @Configuration
+// @PropertySource("classpath:jdbc.properties")
 @ComponentScan({"net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.*"})
 public class AppConfig {
 
