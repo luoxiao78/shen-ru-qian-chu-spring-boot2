@@ -1,10 +1,8 @@
 package net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.config;
 
+import net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.condition.DatabaseConditonal;
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -15,11 +13,13 @@ import java.util.Properties;
  * @created 2021-02-09
  */
 @Configuration
-// @PropertySource("classpath:jdbc.properties")
+@PropertySource("classpath:jdbc.properties")
 @ComponentScan({"net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.*"})
 public class AppConfig {
 
-  @Bean(name = "dataSource")
+  @Bean(name = "dataSource", destroyMethod = "close")
+  // will generate this bean only if matching the conditions in DatabaseConditional
+  @Conditional(DatabaseConditonal.class)
   public DataSource getDataSource() {
     final Properties properties = new Properties();
 
