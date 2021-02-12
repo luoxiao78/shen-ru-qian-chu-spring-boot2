@@ -23,6 +23,9 @@ public class DatabaseProperties {
 
   private String password;
 
+  // @Value("${database.profileDescription}")
+  private String profileDescription;
+
   public void setDriverName(String driverName) {
     this.driverName = driverName;
   }
@@ -55,6 +58,14 @@ public class DatabaseProperties {
 
   public String getPassword() {
     return password;
+  }
+
+  public String getProfileDescription() {
+    return profileDescription;
+  }
+
+  public void setProfileDescription(String profileDescription) {
+    this.profileDescription = profileDescription;
   }
 
 }
