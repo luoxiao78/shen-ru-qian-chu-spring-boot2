@@ -10,7 +10,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
  * @project shen-ru-qian-chu-spring-boot-2
  * @created 2021-02-11
  */
-public class DatabaseConditonal implements Condition {
+public class DatabaseConditional implements Condition {
 
   @Override
   public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
