@@ -33,6 +33,7 @@ public class IocDemo {
     logger.info(ctx.getEnvironment().getProperty("spring.profiles.active"));
     logger.info(ctx.getBean(DatabaseProperties.class).getUsername());
     logger.info(ctx.getBean(DatabaseProperties.class).getProfileDescription());
+    logger.info(ctx.getBean(Squirrel.class).workInfo());
   }
 
 }

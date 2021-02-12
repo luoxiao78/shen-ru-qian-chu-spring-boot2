@@ -17,6 +17,7 @@ import java.util.Properties;
 // @PropertySource("classpath:application-${spring.profiles.active}.properties")
 @PropertySource("classpath:jdbc-${spring.profiles.active}.properties")
 @ComponentScan({"net.xiaoluo.learning.shenruqianchuspringboot2.chapter3.*"})
+@ImportResource("classpath:spring-other.xml")
 public class AppConfig {
 
   @Bean(name = "dataSource", destroyMethod = "close")
