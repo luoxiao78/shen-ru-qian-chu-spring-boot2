@@ -1,12 +1,11 @@
 package net.xiaoluo.learning.shenruqianchuspringboot2.chapter5.config;
 
-import net.xiaoluo.learning.shenruqianchuspringboot2.chapter5.dao.UserMyBatisDao;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.mapper.MapperFactoryBean;
+import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Xiao Luo
@@ -18,17 +17,12 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:application.properties")
 public class MyBatisConfig {
 
-  private final SqlSessionFactory sqlSessionFactory;
-
-  public MyBatisConfig(SqlSessionFactory sqlSessionFactory) {
-    this.sqlSessionFactory = sqlSessionFactory;
-  }
-
   @Bean
-  public MapperFactoryBean<UserMyBatisDao> initUserMyBatisDao() {
-    final MapperFactoryBean<UserMyBatisDao> userMyBatisDaoMapperFactoryBean = new MapperFactoryBean<>();
-    userMyBatisDaoMapperFactoryBean.setMapperInterface(UserMyBatisDao.class);
-    userMyBatisDaoMapperFactoryBean.setSqlSessionFactory(sqlSessionFactory);
-    return userMyBatisDaoMapperFactoryBean;
+  public MapperScannerConfigurer mapperScannerConfigurer() {
+    final MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
+    mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
+    mapperScannerConfigurer.setBasePackage("net.xiaoluo.learning.shenruqianchuspringboot2.chapter5");
+    mapperScannerConfigurer.setAnnotationClass(Repository.class);
+    return mapperScannerConfigurer;
   }
 }
