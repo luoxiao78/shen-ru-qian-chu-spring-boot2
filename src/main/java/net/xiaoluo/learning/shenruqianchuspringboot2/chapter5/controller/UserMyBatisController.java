@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
  * @created 2021-02-16
  */
 @RestController
-public class UserJpaController {
+public class UserMyBatisController {
 
   private UserService userService;
 
-  public UserJpaController(UserService userService) {
+  public UserMyBatisController(UserService userService) {
     this.userService = userService;
   }
 
-  @RequestMapping("/user/{id}")
+  @RequestMapping("/mybatis/user/{id}")
   public User getUser(@PathVariable Long id) {
     return userService.getUser(id);
   }

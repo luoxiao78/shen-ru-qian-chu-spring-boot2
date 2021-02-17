@@ -1,5 +1,6 @@
 package net.xiaoluo.learning.shenruqianchuspringboot2.chapter5;
 
+import net.xiaoluo.learning.shenruqianchuspringboot2.chapter5.config.MyBatisConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @created 2021-02-16
  */
 @SpringBootApplication
-public class JpaDemo {
+public class MyBatisDemo {
 
   public static void main(String[] args) {
-    SpringApplication.run(JpaDemo.class, args);
+    SpringApplication.run(MyBatisConfig.class, args);
   }
 
 }
