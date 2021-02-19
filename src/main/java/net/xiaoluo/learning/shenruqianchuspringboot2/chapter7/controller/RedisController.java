@@ -134,5 +134,28 @@ public class RedisController {
     return resultMap;
   }
 
+  @RequestMapping("/multi")
+  public Map<String, Object> testMulti() {
+    redisTemplate.opsForValue().set("key1", "value1");
+    List list = (List) redisTemplate.execute((RedisOperations redisOperation) -> {
+      redisOperation.watch("key1");
+      redisOperation.multi();
+      redisOperation.opsForValue().set("key2", "value2");
+      // redisOperation.opsForValue().increment("key1", 1);
+      final Object value2 = redisOperation.opsForValue().get("key2");
+      System.out.println("命令在队列中,尚未真正执行,因此value应为null,实为" + value2);
+      redisOperation.opsForValue().set("key3", "value3");
+      final Object value3 = redisOperation.opsForValue().get("key3");
+      System.out.println("命令在队列中,尚未真正执行,因此value应为null,实为" + value3);
+      return redisOperation.exec();
+    });
+    System.out.println(list);
+    final Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("success", true);
+    resultMap.put("key2", redisTemplate.opsForValue().get("key2"));
+    resultMap.put("key3", redisTemplate.opsForValue().get("key3"));
+    return resultMap;
+  }
+
 
 }
