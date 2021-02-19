@@ -1,9 +1,6 @@
 package net.xiaoluo.learning.shenruqianchuspringboot2.chapter7.controller;
 
-import org.springframework.data.redis.core.BoundHashOperations;
-import org.springframework.data.redis.core.BoundListOperations;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
@@ -11,6 +8,7 @@ import redis.clients.jedis.Jedis;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Xiao Luo
@@ -71,6 +69,32 @@ public class RedisController {
     final Map<String, Object> resultMap = new HashMap<>();
     resultMap.put("success", true);
     return resultMap;
+  }
+
+  @RequestMapping("/set")
+  public Map<String, Object> testSet() {
+    redisTemplate.opsForSet().add("set1",
+                                  "v1", "v1", "v2", "v3", "v4", "v5");
+    redisTemplate.opsForSet().add("set2",
+                                  "v2", "v4", "v6", "v8");
+    final BoundSetOperations setOps = redisTemplate.boundSetOps("set1");
+    setOps.add(("v6"), "v7");
+    setOps.remove("v1", "v7");
+    final Set set1 = setOps.members();
+    final Long size = setOps.size();
+    final Set inter = setOps.intersect("set2");
+    setOps.intersectAndStore("set2", "inter");
+    final Set diff = setOps.diff("set2");
+    setOps.diffAndStore("set2", "diff");
+    final Set union = setOps.union("set2");
+    setOps.unionAndStore("set2", "union");
+    final Map<String, Object> resutlMap = new HashMap<>();
+    resutlMap.put("success", true);
+    resutlMap.put("set1", set1);
+    resutlMap.put("inter", inter);
+    resutlMap.put("diff", diff);
+    resutlMap.put("union", union);
+    return resutlMap;
   }
 
 }
