@@ -157,5 +157,24 @@ public class RedisController {
     return resultMap;
   }
 
+  @RequestMapping("/pipeline")
+  public Map<String, Object> testPipeline() {
+    final long start = System.currentTimeMillis();
+    redisTemplate.executePipelined((RedisOperations ro) -> {
+      for (int i = 0; i < 1000000; i++) {
+        ro.opsForValue().set("pipline_" +i, "value" + i);
+        String value = (String) ro.opsForValue().get("pipeline_" + i);
+        if (1000000 == i) {
+          System.out.println("命令只是进入队列,并未真正执行,所以值应为null,实为" + value);
+        }
+      }
+      return null;
+    });
+    final long end = System.currentTimeMillis();
+    System.out.println("耗时: " + (end - start) + "毫秒");
+    final Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("success", true);
+    return resultMap;
+  }
 
 }
