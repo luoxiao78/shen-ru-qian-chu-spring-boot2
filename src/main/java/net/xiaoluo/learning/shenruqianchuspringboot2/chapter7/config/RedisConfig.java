@@ -1,14 +1,12 @@
 package net.xiaoluo.learning.shenruqianchuspringboot2.chapter7.config;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
-import redis.clients.jedis.JedisPoolConfig;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @author Xiao Luo
@@ -17,8 +15,28 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Configuration
 @PropertySource("classpath:application.properties")
+@ComponentScan("net.xiaoluo.learning.shenruqianchuspringboot2.chapter7")
 public class RedisConfig {
 
+  final private RedisTemplate redisTemplate;
+
+  public RedisConfig(RedisTemplate redisTemplate) {
+    this.redisTemplate = redisTemplate;
+  }
+
+  @PostConstruct
+  public void init() {
+    initRedisTemplate();
+  }
+
+  private void initRedisTemplate() {
+    final RedisSerializer<String> stringSerializer = redisTemplate.getStringSerializer();
+    redisTemplate.setValueSerializer(stringSerializer);
+    redisTemplate.setKeySerializer(stringSerializer);
+    redisTemplate.setHashValueSerializer(stringSerializer);
+  }
+
+  /*
   private RedisConnectionFactory redisConnectionFactory;
 
   @Bean(name = "redisConnectionFactory")
@@ -48,5 +66,6 @@ public class RedisConfig {
     redisTemplate.setConnectionFactory(initConnectionFactory());
     return redisTemplate;
   }
+  */
 
 }

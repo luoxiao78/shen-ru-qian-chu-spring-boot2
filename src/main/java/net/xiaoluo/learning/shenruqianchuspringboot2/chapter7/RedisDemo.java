@@ -1,26 +1,18 @@
 package net.xiaoluo.learning.shenruqianchuspringboot2.chapter7;
 
 import net.xiaoluo.learning.shenruqianchuspringboot2.chapter7.config.RedisConfig;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.data.redis.core.RedisOperations;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * @author Xiao Luo
  * @project shen-ru-qian-chu-spring-boot-2
  * @created 2021-02-19
  */
-// @SpringBootApplication
+@SpringBootApplication
 public class RedisDemo {
 
   public static void main(String[] args) {
-    final ApplicationContext ctx = new AnnotationConfigApplicationContext(RedisConfig.class);
-    final RedisTemplate redisTemplate = ctx.getBean(RedisTemplate.class);
-    redisTemplate.execute((RedisOperations redisOperation) -> {
-      redisOperation.opsForValue().set("key1", "value1");
-      redisOperation.opsForHash().put("hash", "field", "hvalue");
-      return null;
-    });
+    SpringApplication.run(RedisConfig.class, args);
   }
 }
