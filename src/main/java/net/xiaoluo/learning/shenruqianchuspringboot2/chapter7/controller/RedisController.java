@@ -1,6 +1,7 @@
 package net.xiaoluo.learning.shenruqianchuspringboot2.chapter7.controller;
 
 import org.springframework.data.redis.core.BoundHashOperations;
+import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,4 +54,23 @@ public class RedisController {
     result.put("success", true);
     return result;
   }
+
+  @RequestMapping("/list")
+  public Map<String, Object> testList() {
+    stringRedisTemplate.opsForList().leftPushAll("list1",
+                                                 "v2", "v4", "v6", "v8", "v10");
+
+    stringRedisTemplate.opsForList().rightPushAll("list2",
+                                                  "v1", "v2", "v3", "v4", "v5", "v6");
+    final BoundListOperations<String, String> listOps = stringRedisTemplate.boundListOps("list2");
+    final String result1 = listOps.rightPop();
+    final String result2 = listOps.index(1L);
+    listOps.leftPush("v0");
+    final Long size = listOps.size();
+    final List<String> elements = listOps.range(0, size - 2);
+    final Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("success", true);
+    return resultMap;
+  }
+
 }
