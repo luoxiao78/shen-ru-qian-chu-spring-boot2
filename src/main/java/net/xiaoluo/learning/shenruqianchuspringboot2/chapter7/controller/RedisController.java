@@ -1,14 +1,15 @@
 package net.xiaoluo.learning.shenruqianchuspringboot2.chapter7.controller;
 
+import org.springframework.data.domain.Range;
+import org.springframework.data.redis.connection.RedisZSetCommands;
+import org.springframework.data.redis.connection.SortParameters;
 import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Xiao Luo
@@ -96,5 +97,42 @@ public class RedisController {
     resutlMap.put("union", union);
     return resutlMap;
   }
+
+  @RequestMapping("/zset")
+  public Map<String, Object> testZset() {
+    final HashSet<TypedTuple<String>> typedTupleSet = new HashSet<>();
+    for (int i = 0; i < 10; i++) {
+      double score = i * 0.1;
+      final TypedTuple<String> typedTuple = new DefaultTypedTuple<>("value" + i, score);
+      typedTupleSet.add(typedTuple);
+    }
+    stringRedisTemplate.opsForZSet().add("zset1", typedTupleSet);
+    final BoundZSetOperations<String, String> zsetOps = stringRedisTemplate.boundZSetOps("zset1");
+    zsetOps.add("value10", 0.26);
+    final Set<String> setRange = zsetOps.range(1L, 6L);
+    final Set<String> setScore = zsetOps.rangeByScore(0.2, 0.6);
+
+    final RedisZSetCommands.Range range = new RedisZSetCommands.Range();
+    range.gt("value3");
+    range.lte("value8");
+    final Set<String> setLex = zsetOps.rangeByLex(range);
+    zsetOps.remove("value9", "value2");
+    final Double score = zsetOps.score("value8");
+    final Set<TypedTuple<String>> rangeSet = zsetOps.rangeWithScores(1L, 6L);
+    final Set<TypedTuple<String>> scoreSet = zsetOps.rangeByScoreWithScores(0.2, 0.6);
+
+    final Set<String> reverseSet = zsetOps.reverseRange(2L, 8L);
+    final Map<String, Object> resultMap = new HashMap<>();
+    resultMap.put("success", true);
+    resultMap.put("set by range", setRange);
+    resultMap.put("set by score", setScore);
+    resultMap.put("set by lex", setLex);
+    resultMap.put("score of value8", score);
+    resultMap.put("set by range with score", rangeSet);
+    resultMap.put("set by score with score", scoreSet);
+    resultMap.put("reversed set by range", reverseSet);
+    return resultMap;
+  }
+
 
 }
