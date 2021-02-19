@@ -3,6 +3,7 @@ package net.xiaoluo.learning.shenruqianchuspringboot2.chapter7;
 import net.xiaoluo.learning.shenruqianchuspringboot2.chapter7.config.RedisConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
@@ -16,7 +17,10 @@ public class RedisDemo {
   public static void main(String[] args) {
     final ApplicationContext ctx = new AnnotationConfigApplicationContext(RedisConfig.class);
     final RedisTemplate redisTemplate = ctx.getBean(RedisTemplate.class);
-    redisTemplate.opsForValue().set("key1", "value1");
-    redisTemplate.opsForHash().put("hash", "field", "hvalue");
+    redisTemplate.execute((RedisOperations redisOperation) -> {
+      redisOperation.opsForValue().set("key1", "value1");
+      redisOperation.opsForHash().put("hash", "field", "hvalue");
+      return null;
+    });
   }
 }
